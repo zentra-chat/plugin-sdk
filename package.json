@@ -1,0 +1,19 @@
+{
+	"name": "@zentra/plugin-sdk",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"bin": {
+		"zentra-plugin": "./bin/zentra-plugin.mjs"
+	},
+	"exports": {
+		".": "./src/index.ts",
+		"./runtime": "./src/runtime.ts"
+	},
+	"dependencies": {
+		"fflate": "^0.8.2"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	}
+}
