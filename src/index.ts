@@ -97,6 +97,7 @@ export interface ZentraPluginSDK {
 	components: {
 		MessageList: () => Promise<{ default: Component }>;
 		MessageInput: () => Promise<{ default: Component }>;
+		MessageItem?: () => Promise<{ default: Component }>;
 		Avatar: () => Promise<{ default: Component }>;
 		Spinner: () => Promise<{ default: Component }>;
 		Button: () => Promise<{ default: Component }>;
