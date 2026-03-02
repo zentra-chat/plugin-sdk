@@ -1,6 +1,6 @@
 {
 	"name": "@zentra/plugin-sdk",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"private": true,
 	"type": "module",
 	"bin": {
@@ -8,12 +8,18 @@
 	},
 	"exports": {
 		".": "./src/index.ts",
-		"./runtime": "./src/runtime.ts"
+		"./runtime": "./src/runtime.ts",
+		"./bridge": "./src/bridge.ts"
 	},
 	"dependencies": {
 		"fflate": "^0.8.2"
 	},
 	"peerDependencies": {
 		"svelte": "^5.0.0"
+	},
+	"peerDependenciesMeta": {
+		"svelte": {
+			"optional": true
+		}
 	}
 }

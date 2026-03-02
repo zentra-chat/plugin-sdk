@@ -1,9 +1,11 @@
 import type { ZentraPluginSDK, SDKCommunityMember, SDKMessage } from './index';
+import type { ZentraBridgeSDK } from './bridge';
 
 declare global {
 	interface Window {
 		ZentraSDK?: ZentraPluginSDK;
 		ZentraPluginAPI?: ZentraPluginSDK;
+		__zentra?: ZentraBridgeSDK;
 	}
 }
 
@@ -12,6 +14,8 @@ function readGlobalSDK(): ZentraPluginSDK | undefined {
 	return window.ZentraSDK || window.ZentraPluginAPI;
 }
 
+// Get the full SDK — only works for built-in plugins that run in the
+// main thread alongside the Zentra app
 export function getSDK(): ZentraPluginSDK {
 	const sdk = readGlobalSDK();
 	if (!sdk) {
@@ -22,6 +26,22 @@ export function getSDK(): ZentraPluginSDK {
 
 export function hasSDK(): boolean {
 	return Boolean(readGlobalSDK());
+}
+
+// Get the bridge SDK — the version available inside sandboxed iframes.
+// This is what third-party plugins should use.
+export function getBridgeSDK(): ZentraBridgeSDK {
+	if (typeof window === 'undefined' || !window.__zentra) {
+		throw new Error(
+			'Zentra Bridge SDK not found. This function only works inside a sandboxed plugin iframe.'
+		);
+	}
+	return window.__zentra;
+}
+
+// Check if we're running inside a sandboxed iframe
+export function hasBridgeSDK(): boolean {
+	return typeof window !== 'undefined' && Boolean(window.__zentra);
 }
 
 export function canMemberPostAnnouncements(member: SDKCommunityMember | null, ownerId: string | null, userId: string | null): boolean {
