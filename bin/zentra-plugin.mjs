@@ -43,6 +43,15 @@ function walkFiles(dir, root, output) {
 	}
 }
 
+function normalizeRelativePath(p) {
+	if (!p || typeof p !== 'string') return '';
+	return p.replace(/^\.\//, '').replace(/^\/+/, '').split(sep).join('/');
+}
+
+function isRemotePath(p) {
+	return typeof p === 'string' && (p.startsWith('http://') || p.startsWith('https://'));
+}
+
 function resolveEntryFile(distDir, manifest) {
 	const fromManifest = typeof manifest.frontendBundle === 'string' ? manifest.frontendBundle.trim() : '';
 	if (fromManifest && !fromManifest.startsWith('http://') && !fromManifest.startsWith('https://')) {
@@ -115,6 +124,16 @@ function packagePlugin(flags) {
 		frontendBundle: entryFile
 	};
 
+	const manifestIconPath = normalizeRelativePath(
+		manifest.icon || (isRemotePath(manifest.iconUrl) ? '' : manifest.iconUrl)
+	);
+	if (manifestIconPath) {
+		const iconAbsolutePath = resolve(projectDir, manifestIconPath);
+		if (!existsSync(iconAbsolutePath)) {
+			fail(`Manifest icon file was not found at ${manifestIconPath}`);
+		}
+	}
+
 	const files = [];
 	walkFiles(distDir, projectDir, files);
 
@@ -132,6 +151,11 @@ function packagePlugin(flags) {
 		archiveFiles[file.relative] = readFileSync(file.absolute);
 	}
 
+	if (manifestIconPath) {
+		const iconAbsolutePath = resolve(projectDir, manifestIconPath);
+		archiveFiles[manifestIconPath] = readFileSync(iconAbsolutePath);
+	}
+
 	mkdirSync(outDir, { recursive: true });
 	const outputName = `${manifest.slug}-${manifest.version}.zplugin.zip`;
 	const outputPath = resolve(outDir, outputName);
@@ -140,6 +164,9 @@ function packagePlugin(flags) {
 
 	console.log(`[zentra-plugin] Packaged ${manifest.slug}@${manifest.version}`);
 	console.log(`[zentra-plugin] Entry file: ${entryFile}`);
+	if (manifestIconPath) {
+		console.log(`[zentra-plugin] Icon file: ${manifestIconPath}`);
+	}
 	console.log(`[zentra-plugin] Output: ${outputPath}`);
 }
 
