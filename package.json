@@ -1,8 +1,11 @@
 {
-	"name": "@zentra/plugin-sdk",
+	"name": "@zentra-chat/plugin-sdk",
 	"version": "0.2.0",
-	"private": true,
+	"private": false,
 	"type": "module",
+	"publishConfig": {
+		"access": "public"
+	},
 	"bin": {
 		"zentra-plugin": "./bin/zentra-plugin.mjs"
 	},

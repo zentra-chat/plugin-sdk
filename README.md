@@ -1,4 +1,4 @@
-# @zentra/plugin-sdk
+# @zentra-chat/plugin-sdk
 
 Standalone SDK for Zentra plugins.
 
@@ -8,10 +8,10 @@ runtime object exposed by Zentra (`window.ZentraSDK` for built-in plugins, `wind
 
 ## Exports
 
-- `@zentra/plugin-sdk`
+- `@zentra-chat/plugin-sdk`
   - `definePlugin()` helper
   - `ZentraPluginSDK` types
-- `@zentra/plugin-sdk/runtime`
+- `@zentra-chat/plugin-sdk/runtime`
   - `getSDK()` runtime accessor
   - `hasSDK()`
   - small utility helpers
@@ -64,7 +64,7 @@ zentra-plugin package --project . --manifest src/manifest.json --dist dist --out
 ## Basic usage
 
 ```ts
-import { definePlugin, type ZentraPluginSDK } from '@zentra/plugin-sdk';
+import { definePlugin, type ZentraPluginSDK } from '@zentra-chat/plugin-sdk';
 
 export const register = definePlugin((sdk: ZentraPluginSDK) => {
   sdk.registerChannelType({
