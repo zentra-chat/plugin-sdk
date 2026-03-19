@@ -1,28 +1,32 @@
 {
-	"name": "@zentra-chat/plugin-sdk",
-	"version": "0.2.0",
-	"private": false,
-	"type": "module",
-	"publishConfig": {
-		"access": "public"
-	},
-	"bin": {
-		"zentra-plugin": "./bin/zentra-plugin.mjs"
-	},
-	"exports": {
-		".": "./src/index.ts",
-		"./runtime": "./src/runtime.ts",
-		"./bridge": "./src/bridge.ts"
-	},
-	"dependencies": {
-		"fflate": "^0.8.2"
-	},
-	"peerDependencies": {
-		"svelte": "^5.0.0"
-	},
-	"peerDependenciesMeta": {
-		"svelte": {
-			"optional": true
-		}
-	}
+  "name": "@zentra-chat/plugin-sdk",
+  "version": "0.2.0",
+  "private": false,
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zentra-chat/plugin-sdk"
+  },
+  "bin": {
+    "zentra-plugin": "./bin/zentra-plugin.mjs"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./runtime": "./src/runtime.ts",
+    "./bridge": "./src/bridge.ts"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2"
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "svelte": {
+      "optional": true
+    }
+  }
 }
